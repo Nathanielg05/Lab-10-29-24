@@ -22,16 +22,29 @@ public class CatchGame extends JPanel {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     player.setDirection(-1);
-                    opponent.setDirection(-1);
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     player.setDirection(1);
+                }
+
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    opponent.setDirection(-1);
+                } else if (e.getKeyCode() == KeyEvent.VK_D) {
                     opponent.setDirection(1);
                 }
+
             }
 
             public void keyReleased(KeyEvent e) {
-                player.setDirection(0);
-                opponent.setDirection(0);
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    opponent.setDirection(0);
+                } else if (e.getKeyCode() == KeyEvent.VK_D) {
+                    opponent.setDirection(0);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    player.setDirection(0);
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    player.setDirection(0);
+                }
             }
 
             @Override
