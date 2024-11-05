@@ -5,12 +5,28 @@ public class Player {
     private int x = 180;
     private int y = 350;
     private int direction = 0;
+    private boolean moveLeftFlag = false;
+    private boolean moveRightFlag = false;
+    private boolean boostFlag = false;
+    private int speed = 5;
 
     public Player() {
     }
 
     public void move() {
-        this.x += this.direction * 5;
+        if (boostflag && speed > 5){
+            x += speed;
+        }else if(!boostflag && speed > 5){
+            x -= speed;
+        }else{
+            if (moveLeftFlag){
+                x += speed;
+            }
+            if (moveRightFlag){
+                x -= speed;
+            }
+        } 
+        
         if (this.x < 0) {
             this.x = 0;
         }
@@ -24,6 +40,9 @@ public class Player {
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
         g.fillRect(this.x, this.y, 70, 10);
+    }
+    public void setboostflag(boolean flag){
+        this.boostflag = flag;
     }
 
     public void setDirection(int direction) {
