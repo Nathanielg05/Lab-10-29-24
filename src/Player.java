@@ -14,9 +14,11 @@ public class Player {
     }
 
     public void move() {
-        if (boostflag && speed > 5){
+        this.x += this.direction * 5;
+
+        if (boostFlag && speed > 5){
             x += speed;
-        }else if(!boostflag && speed > 5){
+        }else if(!boostFlag && speed > 5){
             x -= speed;
         }else{
             if (moveLeftFlag){
@@ -42,7 +44,7 @@ public class Player {
         g.fillRect(this.x, this.y, 70, 10);
     }
     public void setboostflag(boolean flag){
-        this.boostflag = flag;
+        this.boostFlag = flag;
     }
 
     public void setDirection(int direction) {

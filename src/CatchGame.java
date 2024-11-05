@@ -10,13 +10,16 @@ public class CatchGame extends JPanel {
     private final Player player;
     private final PlayerTwo opponent;
     private final ArrayList<Ball> balls;
+    private final Gun gun;
     private int score = 0;
     private Image backgroundImage;
+    int timeMS;
 
     public CatchGame() {
         player = new Player();
         opponent = new PlayerTwo();
         balls = new ArrayList<>();
+        gun = new Gun();
 
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
@@ -78,6 +81,10 @@ public class CatchGame extends JPanel {
         if (Math.random() < 0.01 && balls.size() < 1) {
             balls.add(new Ball(5, 5));
         }
+
+
+
+
     }
 
 
@@ -91,7 +98,7 @@ public class CatchGame extends JPanel {
             ball.draw(g2d);
         }
         g2d.drawString("Score: " + score, 10, 50);
-
+        gun.paintComponent(g);
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -105,9 +112,15 @@ public class CatchGame extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         while (true) {
-            game.repaint();
-            game.update();
-            Thread.sleep(30);
+            game.timeMS++;
+            if (game.timeMS%15 == 0) {
+                game.repaint();
+            }
+            if (game.timeMS%10 == 0) {
+                game.update();
+            }
+
+            Thread.sleep(1);
         }
     }
 }
