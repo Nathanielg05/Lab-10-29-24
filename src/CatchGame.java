@@ -24,29 +24,46 @@ public class CatchGame extends JPanel {
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    player.setDirection(-1);
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    player.setDirection(1);
+                    player.setMoveLeftFlag(true);
                 }
-
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    player.setMoveRightFlag(true);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveLeftFlag()){
+                    player.boost();
+                    player.setBoostFlag(false);
+                }else if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveRightFlag()){
+                    player.boost();
+                    player.setBoostFlag(true);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    opponent.setMoveLeftFlag(true);
+                }
                 if (e.getKeyCode() == KeyEvent.VK_A) {
-                    opponent.setDirection(-1);
-                } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                    opponent.setDirection(1);
+                    opponent.setMoveRightFlag(true);
                 }
-
+                if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag()){
+                    opponent.boost();
+                    opponent.setBoostFlag(false);
+                }else if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveRightFlag()){
+                    opponent.boost();
+                    opponent.setBoostFlag(true);
+                }
             }
 
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    opponent.setDirection(0);
-                } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                    opponent.setDirection(0);
-                }
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    player.setDirection(0);
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    player.setDirection(0);
+                    player.setMoveLeftFlag(false);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    player.setMoveRightFlag(false);
+                }
+
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    player.setMoveLeftFlag(false);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    player.setMoveRightFlag(false);
                 }
             }
 

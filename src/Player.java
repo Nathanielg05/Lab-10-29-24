@@ -4,39 +4,38 @@ import java.awt.Graphics2D;
 public class Player {
     private int x = 180;
     private int y = 350;
-    private int direction = 0;
     private boolean moveLeftFlag = false;
     private boolean moveRightFlag = false;
     private boolean boostFlag = false;
+    private boolean boostActiveFlag = false;
     private int speed = 5;
 
-    public Player() {
-    }
+    public void Player(){}
 
     public void move() {
-        this.x += this.direction * 5;
 
-        if (boostFlag && speed > 5){
-            x += speed;
-        }else if(!boostFlag && speed > 5){
-            x -= speed;
+        boostActiveFlag = speed > 5;
+
+        if (boostFlag && boostActiveFlag){
+            x += speed; //boosts character to the right
+        }else if (!boostFlag && boostActiveFlag){
+            x -= speed; //boost character to the left
         }else{
-            if (moveLeftFlag){
-                x += speed;
+            if (moveLeftFlag) {
+                x -= speed; // moves character to the left
             }
-            if (moveRightFlag){
-                x -= speed;
+            if (moveRightFlag) {
+                x += speed; //moves character to the right
             }
-        } 
-        
-        if (this.x < 0) {
-            this.x = 0;
         }
 
-        if (this.x > 350) {
-            this.x = 350;
-        }
-
+        if (x < 0) x = 0;
+        if (x > 350) x = 350;
+        if (speed > 5){speed -= 2;}
+    }
+    public void boost() {
+        speed = 20;
+        boostActiveFlag = true;
     }
 
     public void draw(Graphics2D g) {
@@ -47,9 +46,6 @@ public class Player {
         this.boostFlag = flag;
     }
 
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
 
     public int catchBall(Ball ball) {
         int ballRadius = 20; // Assuming radius of 20 for the ball
@@ -80,5 +76,22 @@ public class Player {
             }
         }
         return 0; // No collision
+    }
+
+    public void setBoostFlag(boolean boostFlag) {
+        this.boostFlag = boostFlag;
+    }
+
+    public void setMoveLeftFlag(boolean moveLeftFlag) {
+        this.moveLeftFlag = moveLeftFlag;
+    }
+    public void setMoveRightFlag(boolean moveRightFlag) {
+        this.moveRightFlag = moveRightFlag;
+    }
+    public boolean getMoveLeftFlag() {
+        return moveLeftFlag;
+    }
+    public boolean getMoveRightFlag() {
+        return moveRightFlag;
     }
 }

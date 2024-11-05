@@ -4,30 +4,43 @@ import java.awt.Graphics2D;
 public class PlayerTwo {
     private int x = 180;
     private int y = 10;
-    private int direction = 0;
+    private boolean moveLeftFlag = false;
+    private boolean moveRightFlag = false;
+    private boolean boostFlag = false;
+    private boolean boostActiveFlag = false;
+    private int speed = 5;
 
-    public PlayerTwo() {
-    }
+    public void PlayerTwo(){}
 
     public void move() {
-        this.x += this.direction * 5;
-        if (this.x < 0) {
-            this.x = 0;
+
+        boostActiveFlag = speed > 5;
+
+        if (boostFlag && boostActiveFlag){
+            x += speed; //boosts character to the right
+        }else if (!boostFlag && boostActiveFlag){
+            x -= speed; //boost character to the left
+        }else{
+            if (moveLeftFlag) {
+                x -= speed; // moves character to the left
+            }
+            if (moveRightFlag) {
+                x += speed; //moves character to the right
+            }
         }
 
-        if (this.x > 350) {
-            this.x = 350;
-        }
-
+        if (x < 0) x = 0;
+        if (x > 350) x = 350;
+        if (speed > 5){speed -= 2;}
+    }
+    public void boost() {
+        speed = 20;
+        boostActiveFlag = true;
     }
 
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
         g.fillRect(this.x, this.y, 70, 10);
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
     }
 
 
@@ -60,5 +73,22 @@ public class PlayerTwo {
             }
         }
         return 0; // No collision
+    }
+
+    public void setBoostFlag(boolean boostFlag) {
+        this.boostFlag = boostFlag;
+    }
+
+    public void setMoveLeftFlag(boolean moveLeftFlag) {
+        this.moveLeftFlag = moveLeftFlag;
+    }
+    public void setMoveRightFlag(boolean moveRightFlag) {
+        this.moveRightFlag = moveRightFlag;
+    }
+    public boolean getMoveLeftFlag() {
+        return moveLeftFlag;
+    }
+    public boolean getMoveRightFlag() {
+        return moveRightFlag;
     }
 }
