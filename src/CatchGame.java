@@ -15,11 +15,12 @@ public class CatchGame extends JPanel {
     private Image backgroundImage;
     int timeMS;
 
-    public CatchGame() {
+    public CatchGame(JFrame frame) {
         player = new Player();
         opponent = new PlayerTwo();
         balls = new ArrayList<>();
-        gun = new Gun();
+        System.out.println(this.getHeight());
+        gun = new Gun((frame.getHeight() / 2) - 50, (frame.getWidth() / 2) - 50);
 
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
@@ -49,6 +50,10 @@ public class CatchGame extends JPanel {
                     opponent.boost();
                     opponent.setBoostFlag(true);
                 }
+
+                if (e.getKeyCode() == KeyEvent.VK_R) {
+                    gun.rotation += 3.0;
+                }
             }
 
             public void keyReleased(KeyEvent e) {
@@ -60,10 +65,10 @@ public class CatchGame extends JPanel {
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_D) {
-                    player.setMoveLeftFlag(false);
+                    opponent.setMoveLeftFlag(false);
                 }
                 if (e.getKeyCode() == KeyEvent.VK_A) {
-                    player.setMoveRightFlag(false);
+                    opponent.setMoveRightFlag(false);
                 }
             }
 
@@ -120,12 +125,12 @@ public class CatchGame extends JPanel {
 
     public static void main(String[] args) throws InterruptedException {
         JFrame frame = new JFrame("JaPong");
-        CatchGame game = new CatchGame();
-        frame.add(game);
         // double size window to make game more visually friendly
-        game.setBackground(Color.BLACK);
         frame.setSize(400, 400);
+        CatchGame game = new CatchGame(frame);
+        frame.add(game);
         frame.setVisible(true);
+        game.setBackground(Color.BLACK);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         while (true) {

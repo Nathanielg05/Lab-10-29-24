@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class imageStuff {
+public class imageManip {
     public static BufferedImage rotate(BufferedImage image, Double degrees) {
         // Calculate the new size of the image based on the angle of rotaion
         double radians = Math.toRadians(degrees);
@@ -11,12 +11,16 @@ public class imageStuff {
         int newWidth = (int) Math.round(image.getWidth() * cos + image.getHeight() * sin);
         int newHeight = (int) Math.round(image.getWidth() * sin + image.getHeight() * cos);
 
+        //int newWidth = image.getWidth();
+        //int newHeight = image.getHeight();
+        //System.out.println(newWidth + " " + newHeight);
+
         // Create a new image
         BufferedImage rotate = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = rotate.createGraphics();
         // Calculate the "anchor" point around which the image will be rotated
-        int x = (newWidth - image.getWidth()) / 2;
-        int y = (newHeight - image.getHeight()) / 2;
+        int x = (image.getWidth() - image.getWidth()) / 2;
+        int y = (image.getHeight() - image.getHeight()) / 2;
         // Transform the origin point around the anchor point
         AffineTransform at = new AffineTransform();
         at.setToRotation(radians, x + (image.getWidth() / 2), y + (image.getHeight() / 2));
