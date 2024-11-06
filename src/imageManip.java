@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class imageManip {
+interface imageManip {
     public static BufferedImage rotate(BufferedImage image, Double degrees) {
         // Calculate the new size of the image based on the angle of rotaion
         double radians = Math.toRadians(degrees);

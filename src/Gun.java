@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 
-public class Gun extends JPanel {
+public class Gun extends JPanel implements imageManip {
     private BufferedImage sprite;
     private int x;
     private int y;
