@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class CatchGame extends JPanel {
     private final Player player;
-    private final PlayerTwo opponent;
+    private final Player opponent;
     private final ArrayList<Ball> balls;
     private final Gun gun;
     private int score = 0;
@@ -16,8 +16,8 @@ public class CatchGame extends JPanel {
     int timeMS;
 
     public CatchGame(JFrame frame) {
-        player = new Player();
-        opponent = new PlayerTwo();
+        player = new Player(180, 350);
+        opponent = new Player(180, 10);
         balls = new ArrayList<>();
         System.out.println(this.getHeight());
         gun = new Gun((frame.getHeight() / 2) - 50, (frame.getWidth() / 2) - 50);

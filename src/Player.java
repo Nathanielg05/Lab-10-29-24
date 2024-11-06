@@ -2,15 +2,18 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Player {
-    private int x = 180;
-    private int y = 350;
+    private int x;
+    private int y;
     private boolean moveLeftFlag = false;
     private boolean moveRightFlag = false;
     private boolean boostFlag = false;
     private boolean boostActiveFlag = false;
     private int speed = 5;
 
-    public void Player(){}
+    public Player(int startX, int startY){
+        this.x = startX;
+        this.y = startY;
+    }
 
     public void move() {
 
