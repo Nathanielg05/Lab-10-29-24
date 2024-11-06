@@ -26,9 +26,11 @@ interface imageManip {
         at.setToRotation(radians, x + (image.getWidth() / 2), y + (image.getHeight() / 2));
         at.translate(x, y);
         g2d.setTransform(at);
-        // Paint the originl image
+        // Paint the original image
         g2d.drawImage(image, 0, 0, null);
         g2d.dispose();
         return rotate;
     }
+
+
 }

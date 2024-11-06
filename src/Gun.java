@@ -10,6 +10,7 @@ public class Gun extends JPanel implements imageManip {
     private int x;
     private int y;
     public double rotation;
+    public int rotateFlag;
 
     Gun(int xPos, int yPos) {
         try {
@@ -22,6 +23,15 @@ public class Gun extends JPanel implements imageManip {
         this.y = yPos;
         this.rotation = 0.00;
 
+    }
+
+    void rotate() {
+        if (rotateFlag == -1) {
+            this.rotation -= 3.0;
+        }
+        if (rotateFlag == 1) {
+            this.rotation += 3.0;
+        }
     }
 
     @Override

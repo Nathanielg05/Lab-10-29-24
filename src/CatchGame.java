@@ -51,9 +51,14 @@ public class CatchGame extends JPanel {
                     opponent.setBoostFlag(true);
                 }
 
-                if (e.getKeyCode() == KeyEvent.VK_R) {
-                    gun.rotation += 3.0;
+                if (e.getKeyCode() == KeyEvent.VK_Q) {
+                    gun.rotateFlag = -1;
                 }
+                if (e.getKeyCode() == KeyEvent.VK_E) {
+                    gun.rotateFlag = 1;
+                }
+
+
             }
 
             public void keyReleased(KeyEvent e) {
@@ -70,6 +75,10 @@ public class CatchGame extends JPanel {
                 if (e.getKeyCode() == KeyEvent.VK_A) {
                     opponent.setMoveRightFlag(false);
                 }
+
+                if (e.getKeyCode() == KeyEvent.VK_Q || e.getKeyCode() == KeyEvent.VK_E) {
+                    gun.rotateFlag = 0;
+                }
             }
 
             @Override
@@ -83,6 +92,7 @@ public class CatchGame extends JPanel {
     public void update() {
         player.move();
         opponent.move();
+        gun.rotate();
 
         for (Ball ball : balls) {
             ball.move();
