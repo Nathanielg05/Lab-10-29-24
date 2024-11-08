@@ -93,7 +93,13 @@ public class CatchGame extends JPanel {
     public void update() {
         player.move();
         opponent.move();
-        gun.rotate();
+        if (gun.rotation != gun.targetRotation) {
+            gun.rotate();
+            System.out.println(gun.rotation + " " + gun.targetRotation);
+        }
+        else {
+            gun.setRotate();
+        }
 
         for (Ball ball : balls) {
             ball.move();

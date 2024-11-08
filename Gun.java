@@ -11,6 +11,7 @@ public class Gun extends JPanel implements imageManip {
     private int y;
     public double rotation;
     public int rotateFlag;
+    public double targetRotation;
 
     Gun(int xPos, int yPos) {
         try {
@@ -27,11 +28,20 @@ public class Gun extends JPanel implements imageManip {
 
     void rotate() {
         if (rotateFlag == -1) {
-            this.rotation -= 3.0;
+            this.rotation -= 1.5;
         }
         if (rotateFlag == 1) {
-            this.rotation += 3.0;
+            this.rotation += 1.5;
         }
+        //this.rotation = Math.round(this.rotation);
+    }
+
+    void setRotate() {
+        this.targetRotation = Math.round(Math.random() * 360); // get random rotation 0-360
+        this.targetRotation = Math.ceil(targetRotation/3)*3;
+        double cmp = Math.round(this.rotation) - this.targetRotation;
+        if (cmp < 0) {this.rotateFlag = 1;}
+        else {this.rotateFlag = -1;}
     }
 
     @Override
