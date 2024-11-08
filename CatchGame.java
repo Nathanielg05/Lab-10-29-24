@@ -14,6 +14,7 @@ public class CatchGame extends JPanel {
     private int score = 0;
     private Image backgroundImage;
     int timeMS;
+    String useless = "this is a useless string I jus needed a change to test git";
 
     public CatchGame(JFrame frame) {
         player = new Player(180, 350);
