@@ -77,10 +77,10 @@ public class CatchGame extends JPanel {
                     player.setMoveRightFlag(false);
                 }
 
-                if (e.getKeyCode() == KeyEvent.VK_D) {
+                if (e.getKeyCode() == KeyEvent.VK_A) {
                     opponent.setMoveLeftFlag(false);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_A) {
+                if (e.getKeyCode() == KeyEvent.VK_D) {
                     opponent.setMoveRightFlag(false);
                 }
 

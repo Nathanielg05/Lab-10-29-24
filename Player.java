@@ -57,13 +57,13 @@ public class Player {
         int ballLeftX = ball.getX() - ballRadius; // Left of the ball
         int ballRightX = ball.getX() + ballRadius; // Right of the ball
 
-        boolean hitTopOrBottom = ballBottomY >= this.y && ballTopY <= this.y + 20;
+        boolean hitTopOrBottom = ballBottomY >= this.y && ballTopY <= this.y;
         boolean hitLeftOrRight = ballRightX >= this.x && ballLeftX <= this.x + 50;
 
         if (hitTopOrBottom && hitLeftOrRight) {
             // Calculate distances to each side to determine collision type
             int distanceToTop = Math.abs(ballBottomY - this.y);
-            int distanceToBottom = Math.abs(ballTopY - (this.y + 20));
+            int distanceToBottom = Math.abs(ballTopY - (this.y));
             int distanceToLeft = Math.abs(ballRightX - this.x);
             int distanceToRight = Math.abs(ballLeftX - (this.x + 50));
 
