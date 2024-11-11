@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/*
+TODO:
+Fix top player collision
+Make gun fire bullets
+Implement Debuffs
+ */
+
 public class CatchGame extends JPanel {
     private final Player player;
     private final Player opponent;
@@ -38,10 +45,10 @@ public class CatchGame extends JPanel {
                     player.boost();
                     player.setBoostFlag(true);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_D) {
+                if (e.getKeyCode() == KeyEvent.VK_A) {
                     opponent.setMoveLeftFlag(true);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_A) {
+                if (e.getKeyCode() == KeyEvent.VK_D) {
                     opponent.setMoveRightFlag(true);
                 }
                 if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag()){
