@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class CatchGame extends JPanel {
     private final Player player;
     private final Player opponent;
-    private final ArrayList<Ball> balls;
+    private final Ball ball;
     private final Gun gun;
     private int score = 0;
     private Image backgroundImage;
@@ -19,7 +19,7 @@ public class CatchGame extends JPanel {
     public CatchGame(JFrame frame) {
         player = new Player(180, 350);
         opponent = new Player(180, 10);
-        balls = new ArrayList<>();
+        ball = new Ball(3, 3);
         System.out.println(this.getHeight());
         gun = new Gun((frame.getHeight() / 2) - 50, (frame.getWidth() / 2) - 50);
 
@@ -95,31 +95,46 @@ public class CatchGame extends JPanel {
         opponent.move();
         if (gun.rotation != gun.targetRotation) {
             gun.rotate();
-            System.out.println(gun.rotation + " " + gun.targetRotation);
+
         }
         else {
+            // Gun has reached target rotation, ready to fire
+            // Handle Gun Firing Here
+
+            // Find new target rotation & Start Cooldown
+            gun.rotCooldownTimer.restart();
+            gun.rotCooldown = 100;
             gun.setRotate();
         }
 
-        for (Ball ball : balls) {
             ball.move();
             int playerCollision = player.catchBall(ball);
             int opponentCollision = opponent.catchBall(ball);
 
             // Check player collision
             if (playerCollision == 1 || opponentCollision == 1) { // Top/bottom collision
-                ball.yVelocity = -ball.yVelocity;
-                score++;
+                if (ball.bounceCooldown == 0) {
+                    ball.yVelocity *= -1;
+                    score++;
+                    ball.bounceCooldown = 15;
+                }
             } else if (playerCollision == 2 || opponentCollision == 2) { // Left/right collision
-                ball.xVelocity = -ball.xVelocity;
-                score++;
+                if (ball.bounceCooldown == 0) {
+                    ball.xVelocity *= -1;
+                    score++;
+                    ball.bounceCooldown = 15;
+                }
             }
-        }
+
+            if (ball.bounceCooldown > 0) {
+                ball.bounceCooldown--;
+            }
+
 
         // Add a new ball if the conditions are met
-        if (Math.random() < 0.01 && balls.size() < 1) {
-            balls.add(new Ball(5, 5));
-        }
+        /*if (Math.random() < 0.01 && balls.size() < 1) {
+            balls.add(new Ball(3, 3));
+        }*/
 
 
 
@@ -133,9 +148,7 @@ public class CatchGame extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         player.draw(g2d);
         opponent.draw(g2d);
-        for (Ball ball : balls) {
-            ball.draw(g2d);
-        }
+        ball.draw(g2d);
         g2d.drawString("Score: " + score, 10, 50);
         gun.paintComponent(g);
     }

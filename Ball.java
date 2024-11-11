@@ -6,6 +6,7 @@ public class Ball {
     private int y = 100;
     private int size = 20;
     public int xVelocity, yVelocity;
+    public int bounceCooldown;
 
     private long respawnTime;
     private boolean timerStarted;
@@ -26,9 +27,9 @@ public class Ball {
             }
             //reversing the direction for hitting the sides
             if (this.x >= 390) {
-                xVelocity = -xVelocity;
+                xVelocity *= -1;
             } else if (x <= 0) {
-                xVelocity = -xVelocity;
+                xVelocity *= -1;
             }
             if (this.y >= 390){ //check to see if the ball went through the top
                 missedTop = true;
