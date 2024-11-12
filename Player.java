@@ -50,20 +50,20 @@ public class Player {
     }
 
 
-    public int catchBall(Ball ball) {
+    public int catchBallTop(Ball ball) { // This method is used for the player at the bottom
         int ballRadius = 20; // Assuming radius of 20 for the ball
         int ballTopY = ball.getY() - ballRadius; // Top of the ball
         int ballBottomY = ball.getY() + ballRadius; // Bottom of the ball
         int ballLeftX = ball.getX() - ballRadius; // Left of the ball
         int ballRightX = ball.getX() + ballRadius; // Right of the ball
 
-        boolean hitTopOrBottom = ballBottomY >= this.y && ballTopY <= this.y;
+        boolean hitTopOrBottom = ballBottomY >= this.y && ballTopY <= this.y + 20;
         boolean hitLeftOrRight = ballRightX >= this.x && ballLeftX <= this.x + 50;
 
         if (hitTopOrBottom && hitLeftOrRight) {
             // Calculate distances to each side to determine collision type
             int distanceToTop = Math.abs(ballBottomY - this.y);
-            int distanceToBottom = Math.abs(ballTopY - (this.y));
+            int distanceToBottom = Math.abs(ballTopY - (this.y + 20));
             int distanceToLeft = Math.abs(ballRightX - this.x);
             int distanceToRight = Math.abs(ballLeftX - (this.x + 50));
 
@@ -80,6 +80,38 @@ public class Player {
         }
         return 0; // No collision
     }
+
+      public int catchBallBottom(Ball ball) { //This Method is used for the Player at the top 
+        int ballRadius = 20; // Assuming radius of 20 for the ball
+        int ballTopY = ball.getY() - ballRadius; // Top of the ball
+        int ballBottomY = ball.getY() + ballRadius; // Bottom of the ball
+        int ballLeftX = ball.getX() - ballRadius; // Left of the ball
+        int ballRightX = ball.getX() + ballRadius; // Right of the ball
+
+        boolean hitTopOrBottom = ballBottomY >= this.y && ballTopY <= this.y - 10;
+        boolean hitLeftOrRight = ballRightX >= this.x && ballLeftX <= this.x + 50;
+
+        if (hitTopOrBottom && hitLeftOrRight) {
+            // Calculate distances to each side to determine collision type
+            int distanceToTop = Math.abs(ballBottomY - this.y);
+            int distanceToBottom = Math.abs(ballTopY - (this.y - 10));
+            int distanceToLeft = Math.abs(ballRightX - this.x);
+            int distanceToRight = Math.abs(ballLeftX - (this.x + 50));
+
+            // Determine the closest side and return corresponding collision type
+            if (distanceToTop < distanceToBottom && distanceToTop < distanceToLeft && distanceToTop < distanceToRight) {
+                return 1; // Top or bottom collision
+            } else if (distanceToBottom < distanceToTop && distanceToBottom < distanceToLeft && distanceToBottom < distanceToRight) {
+                return 1; // Top or bottom collision
+            } else if (distanceToLeft < distanceToTop && distanceToLeft < distanceToBottom && distanceToLeft < distanceToRight) {
+                return 2; // Left or right collision
+            } else if (distanceToRight < distanceToTop && distanceToRight < distanceToBottom && distanceToRight < distanceToLeft) {
+                return 2; // Left or right collision
+            }
+        }
+        return 0; // No collision
+    }
+
 
     public void setBoostFlag(boolean boostFlag) {
         this.boostFlag = boostFlag;
