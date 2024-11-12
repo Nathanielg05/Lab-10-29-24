@@ -23,7 +23,7 @@ public class Ball {
             this.x += xVelocity;
             if (this.y >= 390 || y <= -30) {
                 timerStarted = true;
-                respawnTime = System.currentTimeMillis() + 3000;
+                respawnTime = System.currentTimeMillis() + 2000;
             }
             //reversing the direction for hitting the sides
             if (this.x >= 390) {
