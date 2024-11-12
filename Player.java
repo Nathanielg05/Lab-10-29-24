@@ -8,7 +8,7 @@ public class Player {
     private boolean moveRightFlag = false;
     private boolean boostFlag = false;
     private boolean boostActiveFlag = false;
-    private int speed = 5;
+    private int speed = 3;
 
     public Player(int startX, int startY){
         this.x = startX;
