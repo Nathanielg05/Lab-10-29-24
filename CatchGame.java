@@ -92,6 +92,10 @@ public class CatchGame extends JPanel {
     public void update() {
         player.move();
         opponent.move();
+
+        scoreplayer = ball.getPlayerScore();
+        scoreopponent = ball.getOpponentScore();
+        
         if (gun.rotation != gun.targetRotation) {
             gun.rotate();
 
@@ -148,12 +152,13 @@ public class CatchGame extends JPanel {
         player.draw(g2d);
         opponent.draw(g2d);
         ball.draw(g2d);
-        g2d.drawString("Score: " + score, 10, 50);
+        g2d.drawString("Score: " + scoreplayer, 10, 210);
+        g2d.drawString("Score: " + scoreopponent, 10, 180);
         gun.paintComponent(g);
     }
 
     public static void main(String[] args) throws InterruptedException {
-        JFrame frame = new JFrame("JaPong");
+        JFrame frame = new JFrame("PwiC");
         // double size window to make game more visually friendly
         frame.setSize(400, 400);
         CatchGame game = new CatchGame(frame);
