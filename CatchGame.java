@@ -18,6 +18,7 @@ public class CatchGame extends JPanel {
     private final Player opponent;
     private final Ball ball;
     private final Gun gun;
+    private Bullet[] bulletArray;
     private int score = 0;
     private Image backgroundImage;
     int timeMS;
@@ -29,6 +30,9 @@ public class CatchGame extends JPanel {
         ball = new Ball(3, 3);
         System.out.println(this.getHeight());
         gun = new Gun((frame.getHeight() / 2) - 50, (frame.getWidth() / 2) - 50);
+        bulletArray = new Bullet[5];
+        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2) ,(frame.getWidth() / 2) , 5);
+
 
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
@@ -158,6 +162,9 @@ public class CatchGame extends JPanel {
         ball.draw(g2d);
         g2d.drawString("Score: " + score, 10, 50);
         gun.paintComponent(g);
+        for (Bullet bullet : bulletArray) {
+            bullet.draw(g2d);
+        }
     }
 
     public static void main(String[] args) throws InterruptedException {
