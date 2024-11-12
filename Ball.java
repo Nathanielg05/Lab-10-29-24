@@ -5,6 +5,8 @@ public class Ball {
     private int x = 200;
     private int y = 100;
     private int size = 20;
+    private int playerScore = 0;
+    private int opponentScore = 0;
     public int xVelocity, yVelocity;
     public int bounceCooldown;
 
@@ -41,6 +43,8 @@ public class Ball {
             if (System.currentTimeMillis() >= respawnTime) {
                 resetPosition(); // Reset the ball's position
                 timerStarted = false; // Reset the timer
+                if (!missedTop) {playerScore++;}
+                if(missedTop){opponentScore++;}
             }
         }
     }
@@ -56,6 +60,13 @@ public class Ball {
 
     public int getY() {
         return this.y;
+    }
+
+    public int getPlayerScore() { //internal score for player
+        return this.playerScore;
+    }
+    public int getOpponentScore() { //internal score for opponent
+        return this.opponentScore;
     }
 
     public void resetPosition() {
