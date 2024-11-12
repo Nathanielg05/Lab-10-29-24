@@ -8,8 +8,9 @@ import javax.swing.JPanel;
 
 /*
 TODO:
-Fix top player collision
 Make gun fire bullets
+Change Ball Momentum based on where it hits paddle
+Fix ball getting stuck at the top of the screen
 Implement Debuffs
  */
 
@@ -26,8 +27,7 @@ public class CatchGame extends JPanel {
     public CatchGame(JFrame frame) {
         player = new Player(180, 350);
         opponent = new Player(180, 10);
-        ball = new Ball(3, 3);
-        System.out.println(this.getHeight());
+        ball = new Ball(0, 0, frame);
         gun = new Gun((frame.getHeight() / 2) - 50, (frame.getWidth() / 2) - 50);
 
         KeyListener listener = new KeyListener() {
@@ -97,7 +97,7 @@ public class CatchGame extends JPanel {
         setFocusable(true);
     }
 
-    public void update() {
+    public void update(JFrame frame) {
         player.move();
         opponent.move();
         if (gun.rotation != gun.targetRotation) {
@@ -112,9 +112,18 @@ public class CatchGame extends JPanel {
             gun.rotCooldownTimer.restart();
             gun.rotCooldown = 100;
             gun.setRotate();
+            if (ball.initFlag == false) {
+                ball.resetPosition(frame);
+
+            }   ball.initFlag = true;
+
+
+
+
+
         }
 
-            ball.move();
+            ball.move(frame);
             int playerCollision = player.catchBall(ball);
             int opponentCollision = opponent.catchBall(ball);
 
@@ -176,10 +185,12 @@ public class CatchGame extends JPanel {
                 game.repaint();
             }
             if (game.timeMS%10 == 0) {
-                game.update();
+                game.update(frame);
             }
 
             Thread.sleep(1);
         }
     }
+
+
 }

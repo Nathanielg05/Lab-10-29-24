@@ -1,23 +1,27 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import javax.swing.JFrame;
 
 public class Ball {
-    private int x = 200;
-    private int y = 100;
+    private int x;
+    private int y;
     private int size = 20;
-    public int xVelocity, yVelocity;
+    public double xVelocity, yVelocity;
     public int bounceCooldown;
+    public Boolean initFlag = false;
 
     private long respawnTime;
     private boolean timerStarted;
     private boolean missedTop;
 
-    public Ball(int xVelocity, int yVelocity) {
+    public Ball(double xVelocity, double yVelocity, JFrame frame) {
+        this.x = frame.getWidth() / 2;
+        this.y = frame.getHeight() / 2;
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
     }
 
-    public void move() {
+    public void move(JFrame frame) {
         if (!timerStarted) {
             this.y += yVelocity;
             this.x += xVelocity;
@@ -39,7 +43,7 @@ public class Ball {
 
         }else{
             if (System.currentTimeMillis() >= respawnTime) {
-                resetPosition(); // Reset the ball's position
+                resetPosition(frame); // Reset the ball's position
                 timerStarted = false; // Reset the timer
             }
         }
@@ -58,13 +62,15 @@ public class Ball {
         return this.y;
     }
 
-    public void resetPosition() {
+    public void resetPosition(JFrame frame) {
        if(missedTop){
-           this.x = 200;
-           this.y = 100;
+           this.x = frame.getWidth() / 2;
+           this.y = frame.getHeight() / 2;
        } else if (!missedTop) {
-           this.x = 200;
-           this.y = 300;
+           this.x = frame.getWidth() / 2;
+           this.y = frame.getHeight() / 2;
        }
+       this.xVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'x');;
+       this.yVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'y');
     }
 }

@@ -11,7 +11,7 @@ public class Gun extends JPanel implements imageManip {
     private BufferedImage sprite;
     private int x;
     private int y;
-    public double rotation;
+    public static double rotation;
     public int rotateFlag;
     public double targetRotation;
     public Timer rotCooldownTimer;
@@ -27,6 +27,7 @@ public class Gun extends JPanel implements imageManip {
         this.x = xPos;
         this.y = yPos;
         this.rotation = 0.00;
+        setRotate();
         this.rotCooldown = 0;
         this.rotCooldownTimer = new Timer(1, new ActionListener() {
             @Override
@@ -35,7 +36,6 @@ public class Gun extends JPanel implements imageManip {
                 if (rotCooldown <= 0) {
                     rotCooldownTimer.stop();
                 }
-                System.out.println(rotCooldown);
             }
         });
 
@@ -60,6 +60,13 @@ public class Gun extends JPanel implements imageManip {
         double cmp = Math.round(this.rotation) - this.targetRotation;
         if (cmp < 0) {this.rotateFlag = 1;}
         else {this.rotateFlag = -1;}
+
+        double temp;
+        temp = Math.round(this.targetRotation/30)*30;
+        System.out.println("temp:" + temp);
+        if (temp%90 == 0) {
+            System.out.println("failed, retrying");
+            setRotate();}
     }
 
     @Override
@@ -67,5 +74,22 @@ public class Gun extends JPanel implements imageManip {
         super.paintComponent(g);
         BufferedImage img = imageManip.rotate(this.sprite, this.rotation);
         g.drawImage(img, this.x, this.y, this);
+    }
+
+
+    static double convertDegToMomentum(double deg, char direction) {
+        double momentum = 0.00;
+        double rads = Math.toRadians(deg);
+        if (direction == 'x') {
+            momentum = Math.cos(rads);
+            momentum *= 3;
+        }
+        if (direction == 'y') {
+            momentum = Math.sin(rads);
+            momentum *= 3;
+        }
+        momentum = Math.floor(momentum*100) / 100;
+        return momentum;
+
     }
 }
