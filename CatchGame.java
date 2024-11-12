@@ -115,8 +115,8 @@ public class CatchGame extends JPanel {
         }
 
             ball.move();
-            int playerCollision = player.catchBall(ball);
-            int opponentCollision = opponent.catchBall(ball);
+            int playerCollision = player.catchBallTop(ball);
+            int opponentCollision = opponent.catchBallBottom(ball);
 
             // Check player collision
             if (playerCollision == 1 || opponentCollision == 1) { // Top/bottom collision
