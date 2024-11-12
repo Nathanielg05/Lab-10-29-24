@@ -16,6 +16,8 @@ Implement Debuffs
 public class CatchGame extends JPanel {
     private final Player player;
     private final Player opponent;
+    private int scoreplayer = 0;
+    private int scoreopponent = 0;
     private final Ball ball;
     private final Gun gun;
     private int score = 0;
@@ -45,11 +47,11 @@ public class CatchGame extends JPanel {
                     player.boost();
                     player.setBoostFlag(true);
                 }
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    opponent.setMoveLeftFlag(true);
-                }
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     opponent.setMoveRightFlag(true);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    opponent.setMoveLeftFlag(true);
                 }
                 if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag()){
                     opponent.boost();
@@ -59,16 +61,6 @@ public class CatchGame extends JPanel {
                     opponent.setBoostFlag(true);
                 }
 
-                if (e.getKeyCode() == KeyEvent.VK_Q) {
-                    gun.rotateFlag = -1;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_E) {
-                    gun.rotateFlag = 1;
-                }
-
-
-            }
-
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     player.setMoveLeftFlag(false);
@@ -77,11 +69,11 @@ public class CatchGame extends JPanel {
                     player.setMoveRightFlag(false);
                 }
 
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    opponent.setMoveLeftFlag(false);
-                }
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     opponent.setMoveRightFlag(false);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    opponent.setMoveLeftFlag(false);
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_Q || e.getKeyCode() == KeyEvent.VK_E) {
