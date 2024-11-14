@@ -1,75 +1,84 @@
-import java.awt.Graphics;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
-/*
-TODO:
-Fix top player collision
-Make gun fire bullets
-Implement Debuffs
- */
+//Added the scoring system with the linked list 
 
 public class CatchGame extends JPanel {
-    private final Player player;
-    private final Player opponent;
-    private final Ball ball;
-    private final Gun gun;
+    private Player player;
+    private Player opponent;
     private Bullet[] bulletArray;
-    private int score = 0;
+    private int scoreplayer = 0;
+    private int scoreopponent = 0;
+    private Ball ball;
+    private final Gun gun;
     private Image backgroundImage;
     int timeMS;
 
+    private final ScoreBoard scoreBoard;
+    private final ScorePanel scorePanel;
+    private boolean gameEnded = false;
 
     public CatchGame(JFrame frame) {
-        player = new Player(180, 350);
-        opponent = new Player(180, 10);
-        ball = new Ball(0, 0, frame);
-        System.out.println(this.getHeight());
-        gun = new Gun((frame.getHeight() / 2) - 50, (frame.getWidth() / 2) - 50);
+        player = new Player(150, 350);
+        opponent = new Player(150, 10);
+        ball = new Ball(3, 3);
+        gun = new Gun(160, 165);
+
+        scoreBoard = new ScoreBoard();
+        scorePanel = new ScorePanel();
+
         bulletArray = new Bullet[5];
-        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2) ,(frame.getWidth() / 2) , 4);
+        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2), (frame.getWidth() / 2), 5);
 
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    player.setMoveLeftFlag(true);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    player.setMoveRightFlag(true);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveLeftFlag()){
-                    player.boost();
-                    player.setBoostFlag(false);
-                }else if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveRightFlag()){
-                    player.boost();
-                    player.setBoostFlag(true);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    opponent.setMoveLeftFlag(true);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_D) {
-                    opponent.setMoveRightFlag(true);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag()){
-                    opponent.boost();
-                    opponent.setBoostFlag(false);
-                }else if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveRightFlag()){
-                    opponent.boost();
-                    opponent.setBoostFlag(true);
+                if (!gameEnded) { //Pause movement when game has ended 
+                    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                        player.setMoveLeftFlag(true);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                        player.setMoveRightFlag(true);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveLeftFlag()) {
+                        player.boost();
+                        player.setBoostFlag(false);
+                    } else if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveRightFlag()) {
+                        player.boost();
+                        player.setBoostFlag(true);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_D) {
+                        opponent.setMoveRightFlag(true);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_A) {
+                        opponent.setMoveLeftFlag(true);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag()) {
+                        opponent.boost();
+                        opponent.setBoostFlag(false);
+                    } else if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveRightFlag()) {
+                        opponent.boost();
+                        opponent.setBoostFlag(true);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_Q) {
+                        gun.rotateFlag = -1;
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_E) {
+                        gun.rotateFlag = 1;
+                    }
                 }
 
-                if (e.getKeyCode() == KeyEvent.VK_Q) {
-                    gun.rotateFlag = -1;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_E) {
-                    gun.rotateFlag = 1;
+                // Toggle the ScorePanel with the 'M' key
+                if (e.getKeyCode() == KeyEvent.VK_M) {
+                    scorePanel.updateScores(scoreBoard.getScores()); // Update scores in ScorePanel
+                    scorePanel.toggleVisibility();
                 }
 
-
+                // Check for 'C' key to start a new game
+                if (e.getKeyCode() == KeyEvent.VK_C) {
+                    resetGame();
+                }
             }
 
             public void keyReleased(KeyEvent e) {
@@ -79,14 +88,12 @@ public class CatchGame extends JPanel {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     player.setMoveRightFlag(false);
                 }
-
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    opponent.setMoveLeftFlag(false);
-                }
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     opponent.setMoveRightFlag(false);
                 }
-
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    opponent.setMoveLeftFlag(false);
+                }
                 if (e.getKeyCode() == KeyEvent.VK_Q || e.getKeyCode() == KeyEvent.VK_E) {
                     gun.rotateFlag = 0;
                 }
@@ -100,79 +107,93 @@ public class CatchGame extends JPanel {
         setFocusable(true);
     }
 
-    public void update(JFrame frame) {
-        player.move();
-        opponent.move();
-        if (gun.rotation != gun.targetRotation) {
-            gun.rotate();
+    private void resetGame() {
+        player = new Player(150, 350);
+        opponent = new Player(150, 10);
+        ball = new Ball(3, 3);
+        scoreplayer = 0;
+        scoreopponent = 0;
+        gameEnded = false;
+        timeMS = 0;
 
-        }
-        else {
-            // Gun has reached target rotation, ready to fire
-            // Handle Gun Firing Here
-
-            // Find new target rotation & Start Cooldown
-            gun.rotCooldownTimer.restart();
-            gun.rotCooldown = 100;
-            gun.setRotate();
-            if (ball.initFlag == false) {
-                ball.initFlag = true;
-                ball.resetPosition(frame);
-            }
-        }
-
-            ball.move(frame);
-            int playerCollision = player.catchBallTop(ball);
-            int opponentCollision = opponent.catchBallTop(ball);
-
-            // Check player collision
-            if (playerCollision == 1 || opponentCollision == 1) { // Top/bottom collision
-                if (ball.bounceCooldown == 0) {
-                    ball.yVelocity *= -1;
-                    score++;
-                    ball.bounceCooldown = 15;
-                }
-            } else if (playerCollision == 2 || opponentCollision == 2) { // Left/right collision
-                if (ball.bounceCooldown == 0) {
-                    ball.xVelocity *= -1;
-                    score++;
-                    ball.bounceCooldown = 15;
-                }
-            }
-
-            if (ball.bounceCooldown > 0) {
-                ball.bounceCooldown--;
-            }
-
-
-        // Add a new ball if the conditions are met
-        /*if (Math.random() < 0.01 && balls.size() < 1) {
-            balls.add(new Ball(3, 3));
-        }*/
-
-
-
-
+        System.out.println("Game Reset! New game started.");
     }
 
+    public void update() {
+        if (gameEnded) return;
+
+        player.move();
+        opponent.move();
+
+        scoreplayer = ball.getPlayerScore();
+        scoreopponent = ball.getOpponentScore();
+
+        if (gun.rotation != gun.targetRotation) {
+            gun.rotate();
+            System.out.println(gun.rotation + " " + gun.targetRotation);
+        } else {
+            gun.setRotate();
+        }
+
+        ball.move();
+        int playerCollision = player.catchBallTop(ball);
+        int opponentCollision = opponent.catchBallBottom(ball);
+
+        if (playerCollision == 1 || opponentCollision == 1) { // Top/bottom collision
+            if (ball.bounceCooldown == 0) {
+                ball.yVelocity *= -1;
+                ball.bounceCooldown = 15;
+            }
+        } else if (playerCollision == 2 || opponentCollision == 2) { // Left/right collision
+            if (ball.bounceCooldown == 0) {
+                ball.xVelocity *= -1;
+                ball.bounceCooldown = 15;
+            }
+        }
+
+        if (ball.bounceCooldown > 0) {
+            ball.bounceCooldown--;
+        }
+
+        checkWinCondition();
+    }
+
+    private void checkWinCondition() {
+        if (Math.abs(scoreplayer - scoreopponent) >= 2) {
+            gameEnded = true;
+            String result = "Player Score: " + scoreplayer + " | Opponent Score: " + scoreopponent;
+            scoreBoard.addScore(result);
+            System.out.println("Game Over! " + result);
+        }
+    }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        ImageIcon background = new ImageIcon("src/Pong.png");
+        g.drawImage(background.getImage(), 0, 188, null);
+
         player.draw(g2d);
         opponent.draw(g2d);
         ball.draw(g2d);
-        g2d.drawString("Score: " + score, 10, 50);
+
+        for (Bullet bullet : bulletArray) {
+            bullet.draw(g2d);
+        }
+
+        g2d.drawString("Score: " + scoreplayer, 10, 210);
+        g2d.drawString("Score: " + scoreopponent, 10, 180);
         gun.paintComponent(g);
-        for (int i = 0; i < bulletArray.length; i++) {
-            bulletArray[i].draw(g2d);
+
+        if (gameEnded) {
+            g2d.drawString("Game Over! Press M to see scores, or C for new game", 30, 100);
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
         JFrame frame = new JFrame("PwiC");
-        // double size window to make game more visually friendly
         frame.setSize(400, 400);
         CatchGame game = new CatchGame(frame);
         frame.add(game);
@@ -182,13 +203,12 @@ public class CatchGame extends JPanel {
 
         while (true) {
             game.timeMS++;
-            if (game.timeMS%15 == 0) {
+            if (game.timeMS % 15 == 0) {
                 game.repaint();
             }
-            if (game.timeMS%10 == 0) {
-                game.update(frame);
+            if (game.timeMS % 10 == 0) {
+                game.update();
             }
-
             Thread.sleep(1);
         }
     }
