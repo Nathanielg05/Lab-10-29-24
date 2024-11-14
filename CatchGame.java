@@ -171,7 +171,7 @@ public class CatchGame extends JPanel {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        JFrame frame = new JFrame("JaPong");
+        JFrame frame = new JFrame("PwiC");
         // double size window to make game more visually friendly
         frame.setSize(400, 400);
         CatchGame game = new CatchGame(frame);
