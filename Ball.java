@@ -1,39 +1,38 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
-import javax.swing.JFrame;
 
 public class Ball {
-    private int x;
-    private int y;
+    private int x = 200; //The ball will be at this X position when the game starts 
+    private int y = 200; //The ball will be at this Y position when the game starts 
     private int size = 20;
-    public double xVelocity, yVelocity;
+    private int playerScore = 0;
+    private int opponentScore = 0;
+    public int xVelocity, yVelocity;
     public int bounceCooldown;
-    public Boolean initFlag = false;
+
 
     private long respawnTime;
     private boolean timerStarted;
     private boolean missedTop;
 
-    public Ball(double xVelocity, double yVelocity, JFrame frame) {
-        this.x = frame.getWidth() / 2;
-        this.y = frame.getHeight() / 2;
+    public Ball(int xVelocity, int yVelocity) {
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
     }
 
-    public void move(JFrame frame) {
+    public void move() {
         if (!timerStarted) {
             this.y += yVelocity;
             this.x += xVelocity;
             if (this.y >= 390 || y <= -30) {
                 timerStarted = true;
-                respawnTime = System.currentTimeMillis() + 3000;
+                respawnTime = System.currentTimeMillis() + 2000; //In 2 sec the ball respawns 
             }
             //reversing the direction for hitting the sides
             if (this.x >= 390) {
-                xVelocity *= -1;
+                xVelocity = -xVelocity;
             } else if (x <= 0) {
-                xVelocity *= -1;
+                xVelocity = -xVelocity;
             }
             if (this.y >= 390){ //check to see if the ball went through the top
                 missedTop = true;
@@ -43,8 +42,10 @@ public class Ball {
 
         }else{
             if (System.currentTimeMillis() >= respawnTime) {
-                resetPosition(frame); // Reset the ball's position
+                resetPosition(); // Reset the ball's position
                 timerStarted = false; // Reset the timer
+                if (!missedTop) {playerScore++;}
+                if(missedTop){opponentScore++;}
             }
         }
     }
@@ -62,15 +63,20 @@ public class Ball {
         return this.y;
     }
 
-    public void resetPosition(JFrame frame) {
-       if(missedTop){
-           this.x = frame.getWidth() / 2;
-           this.y = frame.getHeight() / 2;
-       } else if (!missedTop) {
-           this.x = frame.getWidth() / 2;
-           this.y = frame.getHeight() / 2;
-       }
-       this.xVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'x');;
-       this.yVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'y');
+    public int getPlayerScore() { //internal score for player
+        return this.playerScore;
+    }
+    public int getOpponentScore() { //internal score for opponent
+        return this.opponentScore;
+    }
+
+    public void resetPosition() { //The ball will respawn at the other side of the field to allow the losing playr more time to catch the ball 
+        if(missedTop){
+            this.x = 200;
+            this.y = 100;
+        } else if (!missedTop) {
+            this.x = 200;
+            this.y = 300;
+        }
     }
 }
