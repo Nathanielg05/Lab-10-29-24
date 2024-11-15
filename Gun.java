@@ -21,7 +21,7 @@ public class Gun extends JPanel implements imageManip {
         try {
             sprite = ImageIO.read(new File("src/gun.png"));
             // Resize sprite to a fixed width and height
-            resizedSprite = resizeImage(sprite, 50, 50);
+            resizedSprite = imageManip.resizeImage(sprite, 50, 50);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -42,15 +42,7 @@ public class Gun extends JPanel implements imageManip {
         });
     }
 
-    // Method to resize the image
-    private BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
-        Image tempImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resizedImage.createGraphics();
-        g2d.drawImage(tempImage, 0, 0, null);
-        g2d.dispose();
-        return resizedImage;
-    }
+
 
     void rotate() {
         if (rotateFlag == -1) {

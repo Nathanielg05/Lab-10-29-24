@@ -32,5 +32,15 @@ interface imageManip {
         return rotate;
     }
 
+    // Method to resize the image
+    public static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
+        Image tempImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resizedImage.createGraphics();
+        g2d.drawImage(tempImage, 0, 0, null);
+        g2d.dispose();
+        return resizedImage;
+    }
+
 
 }
