@@ -30,7 +30,7 @@ public class CatchGame extends JPanel {
         scorePanel = new ScorePanel();
 
         bulletArray = new Bullet[5];
-        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2), (frame.getWidth() / 2), 5);
+        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2), (frame.getWidth() / 2), 4);
 
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
@@ -41,12 +41,14 @@ public class CatchGame extends JPanel {
                     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                         player.setMoveRightFlag(true);
                     }
-                    if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveLeftFlag()) {
+                    if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveLeftFlag() && !player.isDebuffActiveFlag()){
                         player.boost();
                         player.setBoostFlag(false);
-                    } else if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveRightFlag()) {
+                        player.setBoostActiveFlag(true);
+                    }else if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveRightFlag() && !player.isDebuffActiveFlag()){
                         player.boost();
                         player.setBoostFlag(true);
+                        player.setBoostActiveFlag(true);
                     }
                     if (e.getKeyCode() == KeyEvent.VK_D) {
                         opponent.setMoveRightFlag(true);
@@ -54,12 +56,14 @@ public class CatchGame extends JPanel {
                     if (e.getKeyCode() == KeyEvent.VK_A) {
                         opponent.setMoveLeftFlag(true);
                     }
-                    if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag()) {
+                    if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag() && !opponent.isDebuffActiveFlag()){
                         opponent.boost();
                         opponent.setBoostFlag(false);
-                    } else if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveRightFlag()) {
+                        opponent.setBoostActiveFlag(true);
+                    }else if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveRightFlag() && !opponent.isDebuffActiveFlag()){
                         opponent.boost();
                         opponent.setBoostFlag(true);
+                        opponent.setBoostActiveFlag(true);
                     }
                     if (e.getKeyCode() == KeyEvent.VK_Q) {
                         gun.rotateFlag = -1;

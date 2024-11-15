@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -9,6 +10,8 @@ public class Player {
     private boolean boostFlag = false;
     private boolean boostActiveFlag = false;
     private int speed = 3;
+    private boolean debuffActiveFlag = false;
+    private long debuffTime;
 
     public Player(int startX, int startY){
         this.x = startX;
@@ -16,13 +19,12 @@ public class Player {
     }
 
     public void move() {
-
-        boostActiveFlag = speed > 5;
-
-        if (boostFlag && boostActiveFlag){
+        if (boostFlag && boostActiveFlag && !debuffActiveFlag){
             x += speed; //boosts character to the right
+            boostActiveFlag = speed > 5;
         }else if (!boostFlag && boostActiveFlag){
             x -= speed; //boost character to the left
+            boostActiveFlag = speed > 5;
         }else{
             if (moveLeftFlag) {
                 x -= speed; // moves character to the left
@@ -34,7 +36,11 @@ public class Player {
 
         if (x < 0) x = 0;
         if (x > 350) x = 350;
-        if (speed > 5){speed -= 2;}
+        if (speed > 3 && !debuffActiveFlag){speed -= 2;}
+        if (speed < 3 && !debuffActiveFlag){speed = 3;}
+        if (System.currentTimeMillis() >= debuffTime) {
+            debuffActiveFlag = false;
+        }
     }
     public void boost() {
         speed = 20;
@@ -49,6 +55,14 @@ public class Player {
         this.boostFlag = flag;
     }
 
+    public void debuff(Bullet bullet){
+        if (!debuffActiveFlag){
+            if (bullet.isSlow()){speed = 1;}
+            else if (bullet.isSpeed()){speed = 20;}
+            debuffActiveFlag = true;
+        }
+        debuffTime = System.currentTimeMillis() + 1000;
+    }
 
     public int catchBallTop(Ball ball) { // This method is used for the player at the bottom
         int ballRadius = 20; // Assuming radius of 20 for the ball
@@ -116,17 +130,20 @@ public class Player {
     public void setBoostFlag(boolean boostFlag) {
         this.boostFlag = boostFlag;
     }
-
     public void setMoveLeftFlag(boolean moveLeftFlag) {
         this.moveLeftFlag = moveLeftFlag;
     }
     public void setMoveRightFlag(boolean moveRightFlag) {
         this.moveRightFlag = moveRightFlag;
     }
+    public void setBoostActiveFlag(boolean boostActiveFlag) {this.boostActiveFlag = boostActiveFlag;}
+
+
     public boolean getMoveLeftFlag() {
         return moveLeftFlag;
     }
     public boolean getMoveRightFlag() {
         return moveRightFlag;
     }
+    public boolean isDebuffActiveFlag() {return debuffActiveFlag;}
 }
