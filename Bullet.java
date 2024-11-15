@@ -4,8 +4,8 @@ import java.util.Random;
 public class Bullet {
     private int x, y;
     private int resetPosX, resetPosY;
-    private double xVelocity = 5;
-    private double yVelocity = 5;
+    public double xVelocity = 5;
+    public double yVelocity = 5;
     private int size = 10;
     private boolean slow = false;
     private boolean speed = false;
@@ -30,9 +30,9 @@ public class Bullet {
 
     public void move(){
 
-        if (Math.abs(this.yVelocity) < 1) {
+        /*if (Math.abs(this.yVelocity) < 1) {
             this.yVelocity += 1;
-        }
+        }*/
         this.x += xVelocity;
         this.y += yVelocity;
 
@@ -53,11 +53,8 @@ public class Bullet {
     public void resetBullet(){
         this.x = resetPosX;
         this.y = resetPosY;
-        double xVel, yVel;
-        xVel = Gun.convertDegToMomentum(Gun.rotation, 'x');
-        yVel = Gun.convertDegToMomentum(Gun.rotation, 'y');
-        this.xVelocity = xVel;
-        this.yVelocity = yVel;
+        this.xVelocity = 0;
+        this.yVelocity = 0;
 
         speed = false;
         slow = false;

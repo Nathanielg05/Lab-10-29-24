@@ -13,6 +13,7 @@ public class CatchGame extends JPanel {
     private final Gun gun;
     private Image backgroundImage;
     int timeMS;
+    private int bulletIterator;
 
     private final ScoreBoard scoreBoard;
     private final ScorePanel scorePanel;
@@ -27,8 +28,8 @@ public class CatchGame extends JPanel {
         scoreBoard = new ScoreBoard();
         scorePanel = new ScorePanel();
 
-        bulletArray = new Bullet[1];
-        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2), (frame.getWidth() / 2), 0);
+        bulletArray = new Bullet[5];
+        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2), (frame.getWidth() / 2), bulletArray.length-1);
 
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
@@ -136,8 +137,12 @@ public class CatchGame extends JPanel {
             // Gun has reached target rotation, ready to fire
             // Handle Gun Firing Here
             double xVel, yVel;
-            xVel = (Gun.convertDegToMomentum(Gun.rotation, 'x'));
-            yVel = (Gun.convertDegToMomentum(Gun.rotation, 'y'));
+            xVel = (Gun.convertDegToMomentum(Gun.rotation-270, 'x'));
+            yVel = (Gun.convertDegToMomentum(Gun.rotation-270, 'y'));
+            bulletArray[bulletIterator].xVelocity = xVel;
+            bulletArray[bulletIterator].yVelocity = yVel;
+            bulletIterator++;
+            if (bulletIterator >= bulletArray.length) {bulletIterator = 0;}
 
             // Find new target rotation & Start Cooldown
             gun.rotCooldownTimer.restart();
