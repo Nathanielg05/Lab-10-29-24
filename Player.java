@@ -63,6 +63,12 @@ public class Player {
         }
         debuffTime = System.currentTimeMillis() + 1000;
     }
+    public boolean playerBulletCollision(Bullet bullet, boolean isPlayer) {
+        Boolean confirmCollision = false;
+        if (isPlayer){confirmCollision = bullet.getX() > x && bullet.getX() < x + 70 && bullet.getY() < y && bullet.getY() > y - 10 ;}
+        if (!isPlayer){confirmCollision = bullet.getX() > x && bullet.getX() < x + 70 && bullet.getY() < y && bullet.getY() > y - 10 ;}
+        return confirmCollision;
+    }
 
     public int catchBallTop(Ball ball) { // This method is used for the player at the bottom
         int ballRadius = 20; // Assuming radius of 20 for the ball

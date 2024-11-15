@@ -11,7 +11,7 @@ public class Gun extends JPanel implements imageManip {
     private BufferedImage resizedSprite; // resized version of sprite
     private int x;
     private int y;
-    public double rotation;
+    static public double rotation;
     public int rotateFlag;
     public double targetRotation;
     public Timer rotCooldownTimer;

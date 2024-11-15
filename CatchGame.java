@@ -156,6 +156,16 @@ public class CatchGame extends JPanel {
         if (ball.bounceCooldown > 0) {
             ball.bounceCooldown--;
         }
+        for (Bullet bullet : bulletArray) {
+            if (player.playerBulletCollision(bullet, true)){
+                bullet.resetBullet();
+                player.debuff(bullet);
+            }
+            if (opponent.playerBulletCollision(bullet, false)){
+                bullet.resetBullet();
+                opponent.debuff(bullet);
+            }
+        }
 
         checkWinCondition();
     }
