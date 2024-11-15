@@ -183,7 +183,7 @@ public class CatchGame extends JPanel {
 
         for (Bullet bullet : bulletArray) {
             bullet.draw(g2d);
-            bullet.move();
+            //bullet.move();
         }
 
         g2d.drawString("Score: " + scoreplayer, 10, 210);
