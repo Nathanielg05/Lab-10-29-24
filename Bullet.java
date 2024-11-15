@@ -4,22 +4,21 @@ import java.util.Random;
 public class Bullet {
     private int x, y;
     private int resetPosX, resetPosY;
-    private int xVelocity = 5;
-    private int yVelocity = 5;
+    private double xVelocity = 5;
+    private double yVelocity = 5;
     private int size = 10;
     private boolean slow = false;
     private boolean speed = false;
     private boolean inverse = false;
+    public int bounceCooldown;
 
-    public Bullet(int x, int y) {
+    public Bullet(double xVelocity, double yVelocity) {
         Random rand = new Random();
-        yVelocity = rand.nextInt((1)+5);
-        xVelocity = rand.nextInt((1)+5);
-        resetPosX = x;
-        resetPosY = y;
+        resetPosX = 175;
+        resetPosY = 175;
         this.x = (int)x;
         this.y = (int)y;
-        /*if (rand.nextBoolean()) {
+        if (rand.nextBoolean()) {
             speed = true;
         }else{
             slow = true;
@@ -27,29 +26,39 @@ public class Bullet {
             inverse = true;
         }*/
 
-        speed = true;
     }
 
     public void move(){
 
+        if (Math.abs(this.yVelocity) < 1) {
+            this.yVelocity += 1;
+        }
         this.x += xVelocity;
         this.y += yVelocity;
 
         if (this.x >= 390) {
-            xVelocity *= -1;
+            xVelocity = -xVelocity;
         } else if (x <= 0) {
-            xVelocity *= -1;
+            xVelocity = -xVelocity;
         }
-        if (y <= 5){ //check to see if the ball went through the top
-            yVelocity *= -1;
-        } else if(y >= 350){
-            yVelocity *= -1;
+        if (this.y <= 5) {
+            resetBullet();
         }
+        else if (y >= 350) {
+            resetBullet();
+        }
+
     }
 
     public void resetBullet(){
         this.x = resetPosX;
         this.y = resetPosY;
+        double xVel, yVel;
+        xVel = Gun.convertDegToMomentum(Gun.rotation, 'x');
+        yVel = Gun.convertDegToMomentum(Gun.rotation, 'y');
+        this.xVelocity = xVel;
+        this.yVelocity = yVel;
+        System.out.println("reset");
     }
 
     public static void populateBullets(Bullet[] bullets, int x, int y, int i){

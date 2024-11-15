@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 //ball gets stuck on the x axis sometimes
 
 public class Ball {
-    private int x = 200;
-    private int y = 200;
+    private int x = 175;
+    private int y = 175;
     private int size = 20;
     private int playerScore = 0;
     private int opponentScore = 0;
@@ -27,6 +27,9 @@ public class Ball {
         if (!timerStarted) {
             this.y += yVelocity;
             this.x += xVelocity;
+            if (Math.abs(this.yVelocity) < 0.5) {
+                this.yVelocity += 1;
+            }
             if (this.y >= 390 || y <= -30) {
                 timerStarted = true;
                 respawnTime = System.currentTimeMillis() + 2000;
@@ -78,13 +81,8 @@ public class Ball {
     }
 
     public void resetPosition() {
-        if(missedTop){
-            this.x = 200;
-            this.y = 200;
-        } else if (!missedTop) {
-            this.x = 200;
-            this.y = 200;
-        }
+            this.x = 175;
+            this.y = 175;
 
         this.xVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'x');;
         this.yVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'y');

@@ -135,7 +135,9 @@ public class CatchGame extends JPanel {
         } else {
             // Gun has reached target rotation, ready to fire
             // Handle Gun Firing Here
-
+            double xVel, yVel;
+            xVel = (Gun.convertDegToMomentum(Gun.rotation, 'x'));
+            yVel = (Gun.convertDegToMomentum(Gun.rotation, 'y'));
 
             // Find new target rotation & Start Cooldown
             gun.rotCooldownTimer.restart();
@@ -168,6 +170,7 @@ public class CatchGame extends JPanel {
             ball.bounceCooldown--;
         }
         for (Bullet bullet : bulletArray) {
+            bullet.move();
             if (player.playerBulletCollision(bullet, true)){
                 bullet.resetBullet();
                 player.debuff(bullet);
