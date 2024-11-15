@@ -28,6 +28,7 @@ public class Gun extends JPanel implements imageManip {
         this.x = xPos;
         this.y = yPos;
         this.rotation = 0.00;
+        setRotate();
 
         this.rotCooldown = 0;
         this.rotCooldownTimer = new Timer(1, new ActionListener() {
@@ -62,6 +63,7 @@ public class Gun extends JPanel implements imageManip {
 
     void setRotate() {
         this.targetRotation = Math.round(Math.random() * 360);
+        if (Math.abs(this.targetRotation - this.rotation) < 30) {this.targetRotation+= 50;}
         this.targetRotation = Math.ceil(targetRotation / 3) * 3;
         double cmp = Math.round(this.rotation) - this.targetRotation;
         if (cmp < 0) {this.rotateFlag = 1;}

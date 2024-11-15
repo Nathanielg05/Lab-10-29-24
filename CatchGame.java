@@ -21,7 +21,7 @@ public class CatchGame extends JPanel {
     public CatchGame(JFrame frame) {
         player = new Player(150, 350);
         opponent = new Player(150, 10);
-        ball = new Ball(2, 2);
+        ball = new Ball(0, 0);
         gun = new Gun(160, 165);
 
         scoreBoard = new ScoreBoard();
@@ -112,7 +112,7 @@ public class CatchGame extends JPanel {
     private void resetGame() {
         player = new Player(150, 350);
         opponent = new Player(150, 10);
-        ball = new Ball(2, 2);
+        ball = new Ball(0, 0);
         scoreplayer = 0;
         scoreopponent = 0;
         gameEnded = false;
@@ -132,9 +132,20 @@ public class CatchGame extends JPanel {
 
         if (gun.rotation != gun.targetRotation) {
             gun.rotate();
-            System.out.println(gun.rotation + " " + gun.targetRotation);
         } else {
+            // Gun has reached target rotation, ready to fire
+            // Handle Gun Firing Here
+
+
+            // Find new target rotation & Start Cooldown
+            gun.rotCooldownTimer.restart();
+            gun.rotCooldown = 100;
             gun.setRotate();
+            if (!ball.initFlag) {
+                ball.initFlag = true;
+                ball.resetPosition();
+            }
+
         }
 
         ball.move();

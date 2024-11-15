@@ -11,6 +11,7 @@ public class Ball {
     private int opponentScore = 0;
     public double xVelocity, yVelocity;
     public int bounceCooldown;
+    public Boolean initFlag = false;
 
 
     private long respawnTime;
