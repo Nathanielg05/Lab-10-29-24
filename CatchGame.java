@@ -79,8 +79,8 @@ public class CatchGame extends JPanel {
                     scorePanel.toggleVisibility();
                 }
 
-                // Check for 'C' key to start a new game
-                if (e.getKeyCode() == KeyEvent.VK_C) {
+                // Check for 'N' key to start a new game
+                if (e.getKeyCode() == KeyEvent.VK_N) {
                     resetGame();
                 }
             }
@@ -192,7 +192,7 @@ public class CatchGame extends JPanel {
         gun.paintComponent(g);
 
         if (gameEnded) {
-            g2d.drawString("Game Over! Press M to see scores, or C for new game", 30, 100);
+            g2d.drawString("Game Over! Press M to see scores, or N for new game", 30, 100);
         }
     }
 
