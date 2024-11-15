@@ -3,8 +3,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
 
-//Added the scoring system with the linked list 
-
 public class CatchGame extends JPanel {
     private Player player;
     private Player opponent;
@@ -23,7 +21,7 @@ public class CatchGame extends JPanel {
     public CatchGame(JFrame frame) {
         player = new Player(150, 350);
         opponent = new Player(150, 10);
-        ball = new Ball(3, 3);
+        ball = new Ball(2, 2);
         gun = new Gun(160, 165);
 
         scoreBoard = new ScoreBoard();
@@ -34,18 +32,18 @@ public class CatchGame extends JPanel {
 
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
-                if (!gameEnded) { //Pause movement when game has ended 
+                if (!gameEnded) { //Pause movement when game has ended
                     if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                         player.setMoveLeftFlag(true);
                     }
                     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                         player.setMoveRightFlag(true);
                     }
-                    if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveLeftFlag() && !player.isDebuffActiveFlag()){
+                    if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveLeftFlag()) {
                         player.boost();
                         player.setBoostFlag(false);
                         player.setBoostActiveFlag(true);
-                    }else if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveRightFlag() && !player.isDebuffActiveFlag()){
+                    } else if (e.getKeyCode() == KeyEvent.VK_SPACE && player.getMoveRightFlag()) {
                         player.boost();
                         player.setBoostFlag(true);
                         player.setBoostActiveFlag(true);
@@ -56,11 +54,11 @@ public class CatchGame extends JPanel {
                     if (e.getKeyCode() == KeyEvent.VK_A) {
                         opponent.setMoveLeftFlag(true);
                     }
-                    if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag() && !opponent.isDebuffActiveFlag()){
+                    if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveLeftFlag()) {
                         opponent.boost();
                         opponent.setBoostFlag(false);
                         opponent.setBoostActiveFlag(true);
-                    }else if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveRightFlag() && !opponent.isDebuffActiveFlag()){
+                    } else if (e.getKeyCode() == KeyEvent.VK_SHIFT && opponent.getMoveRightFlag()) {
                         opponent.boost();
                         opponent.setBoostFlag(true);
                         opponent.setBoostActiveFlag(true);
@@ -114,7 +112,7 @@ public class CatchGame extends JPanel {
     private void resetGame() {
         player = new Player(150, 350);
         opponent = new Player(150, 10);
-        ball = new Ball(3, 3);
+        ball = new Ball(2, 2);
         scoreplayer = 0;
         scoreopponent = 0;
         gameEnded = false;
@@ -185,6 +183,7 @@ public class CatchGame extends JPanel {
 
         for (Bullet bullet : bulletArray) {
             bullet.draw(g2d);
+            bullet.move();
         }
 
         g2d.drawString("Score: " + scoreplayer, 10, 210);
