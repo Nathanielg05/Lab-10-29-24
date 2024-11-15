@@ -58,6 +58,16 @@ public class Bullet {
         yVel = Gun.convertDegToMomentum(Gun.rotation, 'y');
         this.xVelocity = xVel;
         this.yVelocity = yVel;
+
+        speed = false;
+        slow = false;
+        Random rand = new Random();
+        if (rand.nextBoolean()) {
+            speed = true;
+        }else{
+            slow = true;
+        }
+
         System.out.println("reset");
     }
 
@@ -71,6 +81,7 @@ public class Bullet {
 
     public void draw(Graphics2D g) {
         g.setColor(Color.RED);
+        if (this.speed) {g.setColor(Color.GREEN);}
         g.fillOval(x, y, this.size, this.size);
     }
 

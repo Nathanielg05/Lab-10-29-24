@@ -27,8 +27,8 @@ public class CatchGame extends JPanel {
         scoreBoard = new ScoreBoard();
         scorePanel = new ScorePanel();
 
-        bulletArray = new Bullet[5];
-        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2), (frame.getWidth() / 2), 4);
+        bulletArray = new Bullet[1];
+        Bullet.populateBullets(bulletArray, (frame.getHeight() / 2), (frame.getWidth() / 2), 0);
 
         KeyListener listener = new KeyListener() {
             public void keyPressed(KeyEvent e) {
