@@ -118,6 +118,9 @@ public class CatchGame extends JPanel {
         scoreopponent = 0;
         gameEnded = false;
         timeMS = 0;
+        for (Bullet bullet : bulletArray) {
+            bullet.resetBullet();
+        }
 
         System.out.println("Game Reset! New game started.");
     }
@@ -136,13 +139,16 @@ public class CatchGame extends JPanel {
         } else {
             // Gun has reached target rotation, ready to fire
             // Handle Gun Firing Here
-            double xVel, yVel;
-            xVel = (Gun.convertDegToMomentum(Gun.rotation-270, 'x'));
-            yVel = (Gun.convertDegToMomentum(Gun.rotation-270, 'y'));
-            bulletArray[bulletIterator].xVelocity = xVel;
-            bulletArray[bulletIterator].yVelocity = yVel;
-            bulletIterator++;
-            if (bulletIterator >= bulletArray.length) {bulletIterator = 0;}
+            if (ball.initFlag) {
+
+                double xVel, yVel;
+                xVel = (Gun.convertDegToMomentum(Gun.rotation-270, 'x'));
+                yVel = (Gun.convertDegToMomentum(Gun.rotation-270, 'y'));
+                bulletArray[bulletIterator].xVelocity = xVel;
+                bulletArray[bulletIterator].yVelocity = yVel;
+                bulletIterator++;
+                if (bulletIterator >= bulletArray.length) {bulletIterator = 0;}
+            }
 
             // Find new target rotation & Start Cooldown
             gun.rotCooldownTimer.restart();

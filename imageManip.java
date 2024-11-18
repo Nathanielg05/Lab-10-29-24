@@ -3,7 +3,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 interface imageManip {
-    public static BufferedImage rotate(BufferedImage image, Double degrees) {
+    static BufferedImage rotate(BufferedImage image, Double degrees) {
         // Calculate the new size of the image based on the angle of rotaion
         double radians = Math.toRadians(degrees);
         double sin = Math.abs(Math.sin(radians));
@@ -33,7 +33,7 @@ interface imageManip {
     }
 
     // Method to resize the image
-    public static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
+    static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
         Image tempImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = resizedImage.createGraphics();

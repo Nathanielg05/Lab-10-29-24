@@ -27,8 +27,10 @@ public class Ball {
         if (!timerStarted) {
             this.y += yVelocity;
             this.x += xVelocity;
-            if (Math.abs(this.yVelocity) < 0.5) {
-                this.yVelocity += 1;
+            if (this.initFlag) {
+                if (Math.abs(this.yVelocity) < 0.5) {
+                    this.yVelocity += 1;
+                }
             }
             if (this.y >= 390 || y <= -30) {
                 timerStarted = true;
