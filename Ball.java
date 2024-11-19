@@ -27,8 +27,11 @@ public class Ball {
             this.y += yVelocity;
             this.x += xVelocity;
             if (this.initFlag) {
-                if (Math.abs(this.yVelocity) < 0.5) {
-                    this.yVelocity += 1;
+                if (Math.abs(this.yVelocity) < 1) {
+                    this.yVelocity = Math.ceil(this.yVelocity);
+                }
+                if (Math.abs(this.xVelocity) < 1) {
+                    this.xVelocity = Math.ceil(this.xVelocity);
                 }
             }
             if (this.y >= 400 || y <= -30) {

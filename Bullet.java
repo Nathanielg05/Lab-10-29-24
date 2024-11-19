@@ -65,7 +65,6 @@ public class Bullet {
             slow = true;
         }
 
-        System.out.println("reset");
     }
 
     public static void populateBullets(Bullet[] bullets, int x, int y, int i){

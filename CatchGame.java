@@ -3,6 +3,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
 
+/*
+TODO:
+Fix Bugs
+Known Bugs:
+- Bullets may be the wrong color
+ */
+
 public class CatchGame extends JPanel {
     private Player player;
     private Player opponent;
@@ -19,7 +26,6 @@ public class CatchGame extends JPanel {
     private final ScorePanel scorePanel;
     private boolean gameEnded = false;
 
-    //hello
 
     public CatchGame(JFrame frame) {
         player = new Player(150, 350);
@@ -71,6 +77,10 @@ public class CatchGame extends JPanel {
                     }
                     if (e.getKeyCode() == KeyEvent.VK_E) {
                         gun.rotateFlag = 1;
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_J) {
+                        System.out.println(ball.xVelocity + " " + ball.yVelocity);
+                        System.out.println(ball.getX() + " " + ball.getY());
                     }
                 }
 
