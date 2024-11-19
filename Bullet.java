@@ -64,10 +64,10 @@ public class Bullet {
         Random rand = new Random();
         if (rand.nextBoolean()) {
             speed = true;
-            this.color = color.GREEN;
+            this.color = Color.GREEN;
         }else{
             slow = true;
-            this.color = color.RED;
+            this.color = Color.RED;
         }
 
     }
