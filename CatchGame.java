@@ -157,8 +157,10 @@ public class CatchGame extends JPanel {
             gun.rotCooldown = 100;
             gun.setRotate();
             if (!ball.initFlag) {
-                ball.initFlag = true;
                 ball.resetPosition();
+                ball.xVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'x');
+                ball.yVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'y');
+                ball.initFlag = true;
             }
 
         }
@@ -234,7 +236,7 @@ public class CatchGame extends JPanel {
 
     public static void main(String[] args) throws InterruptedException {
         JFrame frame = new JFrame("PwiC");
-        frame.setSize(400, 400);
+        frame.setSize(420, 400);
         CatchGame game = new CatchGame(frame);
         frame.add(game);
         frame.setVisible(true);

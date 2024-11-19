@@ -64,7 +64,6 @@ public class Gun extends JPanel implements imageManip {
         double temp;
         temp = Math.round(this.targetRotation/30)*30;
         if (temp%90 == 0) {
-            System.out.println("failed, retrying");
             setRotate();}
     }
 

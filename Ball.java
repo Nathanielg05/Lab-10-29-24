@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 public class Ball {
     private int x = 175;
     private int y = 175;
-    private int size = 20;
+    public int size = 20;
     private int playerScore = 0;
     private int opponentScore = 0;
     public double xVelocity, yVelocity;
@@ -16,7 +16,6 @@ public class Ball {
 
     private long respawnTime;
     private boolean timerStarted;
-    private boolean missedTop;
 
     public Ball(int xVelocity, int yVelocity) {
         this.xVelocity = xVelocity;
@@ -32,32 +31,27 @@ public class Ball {
                     this.yVelocity += 1;
                 }
             }
-            if (this.y >= 390 || y <= -30) {
+            if (this.y >= 400 || y <= -30) {
                 timerStarted = true;
                 respawnTime = System.currentTimeMillis() + 2000;
+                if (y <= -30) {
+                    playerScore++;
+                }
+                else {
+                    opponentScore++;
+                }
             }
             //reversing the direction for hitting the sides
-            if (this.x >= 390) {
+            if (this.x >= (400-this.size)) {
                 xVelocity = -xVelocity;
             } else if (x <= 0) {
                 xVelocity = -xVelocity;
-            }
-            if (this.y >= 390){ //check to see if the ball went through the top
-                missedTop = true;
-            } else {
-                missedTop = false;
             }
 
         }else {
             if (System.currentTimeMillis() >= respawnTime) {
                 resetPosition(); // Reset the ball's position
                 timerStarted = false; // Reset the timer
-                if (!missedTop) {
-                    playerScore++;
-                }
-                if (missedTop) {
-                    opponentScore++;
-                }
             }
         }
     }
@@ -83,10 +77,10 @@ public class Ball {
     }
 
     public void resetPosition() {
-            this.x = 175;
-            this.y = 175;
-
-        this.xVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'x');;
-        this.yVelocity = Gun.convertDegToMomentum(Gun.rotation-270, 'y');
+        this.x = 175;
+        this.y = 175;
+        this.initFlag = false;
+        this.xVelocity = 0;//Gun.convertDegToMomentum(Gun.rotation-270, 'x');
+        this.yVelocity = 0;//Gun.convertDegToMomentum(Gun.rotation-270, 'y');
     }
 }

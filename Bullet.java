@@ -36,7 +36,7 @@ public class Bullet {
         this.x += xVelocity;
         this.y += yVelocity;
 
-        if (this.x >= 390) {
+        if (this.x >= 400) {
             xVelocity = -xVelocity;
         } else if (x <= 0) {
             xVelocity = -xVelocity;
@@ -44,7 +44,7 @@ public class Bullet {
         if (this.y <= 5) {
             resetBullet();
         }
-        else if (y >= 350) {
+        else if (y >= 400) {
             resetBullet();
         }
 

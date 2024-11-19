@@ -12,10 +12,13 @@ public class Player {
     private int speed = 3;
     private boolean debuffActiveFlag = false;
     private long debuffTime;
+    public int width,height;
 
     public Player(int startX, int startY){
         this.x = startX;
         this.y = startY;
+        this.width = 70;
+        this.height = 10;
     }
 
     public void move() {
@@ -35,7 +38,7 @@ public class Player {
         }
 
         if (x < 0) x = 0;
-        if (x > 350) x = 350;
+        if (x > (400-this.width)) x -= speed;
         if (speed > 3 && !debuffActiveFlag){speed -= 2;}
         if (speed < 3 && !debuffActiveFlag){speed = 3;}
         if (System.currentTimeMillis() >= debuffTime) {
@@ -49,7 +52,7 @@ public class Player {
 
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
-        g.fillRect(this.x, this.y, 70, 10);
+        g.fillRect(this.x, this.y, this.width, this.height);
     }
     public void setboostflag(boolean flag){
         this.boostFlag = flag;
@@ -65,8 +68,8 @@ public class Player {
     }
     public boolean playerBulletCollision(Bullet bullet, boolean isPlayer) {
         Boolean confirmCollision = false;
-        if (isPlayer){confirmCollision = bullet.getX() > x && bullet.getX() < x + 70 && bullet.getY() < y && bullet.getY() > y - 10 ;}
-        if (!isPlayer){confirmCollision = bullet.getX() > x && bullet.getX() < x + 70 && bullet.getY() < y && bullet.getY() > y - 10 ;}
+        if (isPlayer){confirmCollision = bullet.getX() > x && bullet.getX() < x + this.width && bullet.getY() < y && bullet.getY() > y - this.height ;}
+        if (!isPlayer){confirmCollision = bullet.getX() > x && bullet.getX() < x + this.width && bullet.getY() < y && bullet.getY() > y - this.height ;}
         return confirmCollision;
     }
 
@@ -78,14 +81,14 @@ public class Player {
         int ballRightX = ball.getX() + ballRadius; // Right of the ball
 
         boolean hitTopOrBottom = ballBottomY >= this.y && ballTopY <= this.y;
-        boolean hitLeftOrRight = ballRightX >= this.x && ballLeftX <= this.x + 50;
+        boolean hitLeftOrRight = ballRightX >= this.x && ballLeftX <= this.x + this.width;
 
         if (hitTopOrBottom && hitLeftOrRight) {
             // Calculate distances to each side to determine collision type
             int distanceToTop = Math.abs(ballBottomY - this.y);
             int distanceToBottom = Math.abs(ballTopY - (this.y));
             int distanceToLeft = Math.abs(ballRightX - this.x);
-            int distanceToRight = Math.abs(ballLeftX - (this.x + 50));
+            int distanceToRight = Math.abs(ballLeftX - (this.x + this.width));
 
             // Determine the closest side and return corresponding collision type
             if (distanceToTop < distanceToBottom && distanceToTop < distanceToLeft && distanceToTop < distanceToRight) {
@@ -114,9 +117,9 @@ public class Player {
         if (hitTopOrBottom && hitLeftOrRight) {
             // Calculate distances to each side to determine collision type
             int distanceToTop = Math.abs(ballBottomY - this.y);
-            int distanceToBottom = Math.abs(ballTopY - (this.y - 10));
+            int distanceToBottom = Math.abs(ballTopY - (this.y - this.height));
             int distanceToLeft = Math.abs(ballRightX - this.x);
-            int distanceToRight = Math.abs(ballLeftX - (this.x + 50));
+            int distanceToRight = Math.abs(ballLeftX - (this.x + this.width));
 
             // Determine the closest side and return corresponding collision type
             if (distanceToTop < distanceToBottom && distanceToTop < distanceToLeft && distanceToTop < distanceToRight) {
