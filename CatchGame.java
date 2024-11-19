@@ -19,6 +19,8 @@ public class CatchGame extends JPanel {
     private final ScorePanel scorePanel;
     private boolean gameEnded = false;
 
+    //hello
+
     public CatchGame(JFrame frame) {
         player = new Player(150, 350);
         opponent = new Player(150, 10);
