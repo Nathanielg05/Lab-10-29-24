@@ -10,6 +10,7 @@ public class Bullet {
     private boolean slow = false;
     private boolean speed = false;
     private boolean inverse = false;
+    private Color color;
     public int bounceCooldown;
 
     public Bullet(double xVelocity, double yVelocity) {
@@ -20,8 +21,10 @@ public class Bullet {
         this.y = (int)y;
         if (rand.nextBoolean()) {
             speed = true;
+            this.color = color.GREEN;
         }else{
             slow = true;
+            this.color = color.RED;
         }/*else{
             inverse = true;
         }*/
@@ -76,8 +79,7 @@ public class Bullet {
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.RED);
-        if (this.speed) {g.setColor(Color.GREEN);}
+        g.setColor(this.color);
         g.fillOval(x, y, this.size, this.size);
     }
 
