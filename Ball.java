@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 public class Ball {
     private int x = 175;
     private int y = 175;
+    public float speed = 1;
     public int size = 20;
     private int playerScore = 0;
     private int opponentScore = 0;
@@ -24,8 +25,8 @@ public class Ball {
 
     public void move() {
         if (!timerStarted) {
-            this.y += yVelocity;
-            this.x += xVelocity;
+            this.y += yVelocity*speed;
+            this.x += xVelocity*speed;
             if (this.initFlag) {
                 if (Math.abs(this.yVelocity) < 1) {
                     this.yVelocity = Math.ceil(this.yVelocity);
@@ -82,6 +83,7 @@ public class Ball {
     public void resetPosition() {
         this.x = 175;
         this.y = 175;
+        this.speed = 1;
         this.initFlag = false;
         this.xVelocity = 0;//Gun.convertDegToMomentum(Gun.rotation-270, 'x');
         this.yVelocity = 0;//Gun.convertDegToMomentum(Gun.rotation-270, 'y');

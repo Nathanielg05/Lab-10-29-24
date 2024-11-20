@@ -175,6 +175,12 @@ public class PwiC extends JPanel {
 
         }
 
+        if (timeMS % 3000 == 0) {
+            if (ball.speed < 4) {
+                ball.speed += 0.25F;
+            }
+        }
+
         ball.move();
         int playerCollision = player.catchBallTop(ball);
         int opponentCollision = opponent.catchBallBottom(ball);
@@ -258,9 +264,11 @@ public class PwiC extends JPanel {
             if (game.timeMS % 15 == 0) {
                 game.repaint();
             }
+
             if (game.timeMS % 10 == 0) {
                 game.update();
             }
+
             Thread.sleep(1);
         }
     }
