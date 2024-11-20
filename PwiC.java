@@ -213,7 +213,7 @@ public class PwiC extends JPanel {
         if (Math.abs(scoreplayer - scoreopponent) >= 2) {
             gameEnded = true;
             String result = "Player Score: " + scoreplayer + " | Opponent Score: " + scoreopponent;
-            scoreBoard.addScore(result);
+            scoreBoard.addScore(result, "name");
             System.out.println("Game Over! " + result);
         }
     }

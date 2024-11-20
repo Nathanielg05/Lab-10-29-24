@@ -17,10 +17,10 @@ public class ScorePanel extends JFrame {
         add(new JScrollPane(scoreArea), BorderLayout.CENTER);
     }
 
-    public void updateScores(List<String> scores) {
+    public void updateScores(List<Score> scores) {
         scoreArea.setText(""); // Clears previous scores
-        for (String score : scores) {
-            scoreArea.append(score + "\n");
+        for (Score score : scores) {
+            scoreArea.append(score.gamenumber + " " + score.name + " " + score.score + "\n");
         }
     }
 
