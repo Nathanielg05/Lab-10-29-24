@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
+import java.util.List;
 
 /*
 TODO:
@@ -89,6 +90,23 @@ public class PwiC extends JPanel {
                     scorePanel.updateScores(scoreBoard.getScores()); // Update scores in ScorePanel
                     scorePanel.toggleVisibility();
                 }
+                
+                if (e.getKeyCode() == KeyEvent.VK_P) {
+                    List<String> scores = scoreBoard.getScores();
+                    SortScores.quickSort(scores, true); // Sort by Player score
+                    scorePanel.updateScores(scores);
+                    scorePanel.toggleVisibility(); // Ensure panel shows sorted scores
+                }
+
+                if (e.getKeyCode() == KeyEvent.VK_O) {
+                    List<String> scores = scoreBoard.getScores();
+                    SortScores.quickSort(scores, false); // Sort by Opponent score
+                    scorePanel.updateScores(scores);
+                    scorePanel.toggleVisibility(); // Ensure panel shows sorted scores
+                }
+
+
+                
 
                 // Check for 'N' key to start a new game
                 if (e.getKeyCode() == KeyEvent.VK_N) {
@@ -219,7 +237,7 @@ public class PwiC extends JPanel {
         if (Math.abs(scoreplayer - scoreopponent) >= 2) {
             gameEnded = true;
             String result = "Player Score: " + scoreplayer + " | Opponent Score: " + scoreopponent;
-            scoreBoard.addScore(result, "name");
+            scoreBoard.addScore(result);
             System.out.println("Game Over! " + result);
         }
     }
@@ -247,6 +265,7 @@ public class PwiC extends JPanel {
 
         if (gameEnded) {
             g2d.drawString("Game Over! Press M to see scores, or N for new game", 30, 100);
+            g2d.drawString("To sort scores press P for player and O for opponent", 30, 120);
         }
     }
 
