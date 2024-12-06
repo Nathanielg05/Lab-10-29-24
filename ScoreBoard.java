@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ScoreBoard {
-    private final LinkedList<Score> scores;
+    private final LinkedList<String> scores;
     private int gameNumber;
 
     public ScoreBoard() {
@@ -10,14 +10,13 @@ public class ScoreBoard {
         gameNumber = 1; //starting game
     }
 
-    public void addScore(String score, String name) {
-        Score gameScore = new Score(score, gameNumber, name);
+    public void addScore(String score) {
+        String gameScore = "Game " + gameNumber + ": " + score;
         scores.add(gameScore);
         gameNumber++;
     }
 
-    public List<Score> getScores() {
+    public List<String> getScores() {
         return new LinkedList<>(scores); //returns the list
     }
 }
-
