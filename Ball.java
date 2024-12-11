@@ -34,6 +34,12 @@ public class Ball {
                 if (Math.abs(this.xVelocity) < 1) {
                     this.xVelocity = Math.ceil(this.xVelocity);
                 }
+                if (this.xVelocity == -0.0) {
+                    this.xVelocity = 0.2;
+                }
+                if (this.yVelocity == -0.0) {
+                    this.yVelocity = 0.2;
+                }
             }
             if (this.y >= 400 || y <= -30) {
                 timerStarted = true;
