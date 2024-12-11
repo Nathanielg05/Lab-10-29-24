@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Gun extends JPanel implements imageManip {
+public class Gun extends JPanel implements ImageManip {
     private BufferedImage sprite;
     private BufferedImage resizedSprite; // resized version of sprite
     private int x;
@@ -21,7 +21,7 @@ public class Gun extends JPanel implements imageManip {
         try {
             sprite = ImageIO.read(new File("src/gun.png"));
             // Resize sprite to a fixed width and height
-            resizedSprite = imageManip.resizeImage(sprite, 50, 50);
+            resizedSprite = ImageManip.resizeImage(sprite, 50, 50);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -72,7 +72,7 @@ public class Gun extends JPanel implements imageManip {
         super.paintComponent(g);
 
         // Rotate the resized image
-        BufferedImage img = imageManip.rotate(this.resizedSprite, this.rotation);
+        BufferedImage img = ImageManip.rotate(this.resizedSprite, this.rotation);
         g.drawImage(img, this.x, this.y, this);
     }
 

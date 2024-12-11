@@ -73,12 +73,6 @@ public class PwiC extends JPanel {
                         opponent.setBoostFlag(true);
                         opponent.setBoostActiveFlag(true);
                     }
-                    if (e.getKeyCode() == KeyEvent.VK_Q) {
-                        gun.rotateFlag = -1;
-                    }
-                    if (e.getKeyCode() == KeyEvent.VK_E) {
-                        gun.rotateFlag = 1;
-                    }
                     if (e.getKeyCode() == KeyEvent.VK_J) {
                         System.out.println(ball.xVelocity + " " + ball.yVelocity);
                         System.out.println(ball.getX() + " " + ball.getY());
@@ -126,9 +120,6 @@ public class PwiC extends JPanel {
                 }
                 if (e.getKeyCode() == KeyEvent.VK_A) {
                     opponent.setMoveLeftFlag(false);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_Q || e.getKeyCode() == KeyEvent.VK_E) {
-                    gun.rotateFlag = 0;
                 }
             }
 
