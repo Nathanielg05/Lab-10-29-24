@@ -62,8 +62,8 @@ public class Gun extends JPanel implements ImageManip {
         else {this.rotateFlag = -1;}
 
         double temp;
-        temp = Math.round(this.targetRotation/30)*30;
-        if (temp%90 == 0) {
+        temp = Math.round(this.targetRotation/15)*15;
+        if (temp%90 == 0 || temp == 0) {
             setRotate();}
     }
 
